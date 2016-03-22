@@ -1,0 +1,394 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D21A5AFF1C9D7FB5002279CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A5AFE1C9D7FB5002279CE /* main.m */; };
+		D21A5B021C9D7FB5002279CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A5B011C9D7FB5002279CE /* AppDelegate.m */; };
+		D21A5B0A1C9D7FB5002279CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21A5B091C9D7FB5002279CE /* Assets.xcassets */; };
+		D2EE8FC01C9D83FA00449F74 /* ChessStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EE8FBF1C9D83FA00449F74 /* ChessStorage.m */; };
+		D2F4613D1C9FDA150005D933 /* ChessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4613C1C9FDA150005D933 /* ChessConfig.m */; };
+		D2F461491CA017300005D933 /* RosterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F461481CA017300005D933 /* RosterUtil.m */; };
+		D2F4614D1CA0175F0005D933 /* RosterStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4614C1CA0175F0005D933 /* RosterStorage.m */; };
+		D2F461561CA018A20005D933 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F461551CA018A20005D933 /* FriendListViewController.m */; };
+		D2F461591CA01B090005D933 /* Roster.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2F461571CA01B090005D933 /* Roster.xcdatamodeld */; };
+		D2F461701CA025E20005D933 /* FriendEntity+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4616D1CA025E20005D933 /* FriendEntity+CoreDataProperties.m */; };
+		D2F461711CA025E20005D933 /* FriendEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4616F1CA025E20005D933 /* FriendEntity.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D21A5AFA1C9D7FB5002279CE /* ChessStorage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessStorage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D21A5AFE1C9D7FB5002279CE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D21A5B001C9D7FB5002279CE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D21A5B011C9D7FB5002279CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D21A5B091C9D7FB5002279CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D21A5B0E1C9D7FB5002279CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2EE8FBE1C9D83FA00449F74 /* ChessStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessStorage.h; sourceTree = "<group>"; };
+		D2EE8FBF1C9D83FA00449F74 /* ChessStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessStorage.m; sourceTree = "<group>"; };
+		D2F4613B1C9FDA150005D933 /* ChessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessConfig.h; sourceTree = "<group>"; };
+		D2F4613C1C9FDA150005D933 /* ChessConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessConfig.m; sourceTree = "<group>"; };
+		D2F4613E1C9FF5460005D933 /* ChessStorageProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChessStorageProtected.h; sourceTree = "<group>"; };
+		D2F4613F1C9FF5640005D933 /* ChessConfigProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChessConfigProtected.h; sourceTree = "<group>"; };
+		D2F461471CA017300005D933 /* RosterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosterUtil.h; sourceTree = "<group>"; };
+		D2F461481CA017300005D933 /* RosterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosterUtil.m; sourceTree = "<group>"; };
+		D2F4614B1CA0175F0005D933 /* RosterStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosterStorage.h; sourceTree = "<group>"; };
+		D2F4614C1CA0175F0005D933 /* RosterStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosterStorage.m; sourceTree = "<group>"; };
+		D2F461541CA018A20005D933 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
+		D2F461551CA018A20005D933 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
+		D2F461581CA01B090005D933 /* Roster.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Roster.xcdatamodel; sourceTree = "<group>"; };
+		D2F4616C1CA025E20005D933 /* FriendEntity+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FriendEntity+CoreDataProperties.h"; sourceTree = "<group>"; };
+		D2F4616D1CA025E20005D933 /* FriendEntity+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FriendEntity+CoreDataProperties.m"; sourceTree = "<group>"; };
+		D2F4616E1CA025E20005D933 /* FriendEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendEntity.h; sourceTree = "<group>"; };
+		D2F4616F1CA025E20005D933 /* FriendEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendEntity.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D21A5AF71C9D7FB5002279CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D21A5AF11C9D7FB5002279CE = {
+			isa = PBXGroup;
+			children = (
+				D21A5AFC1C9D7FB5002279CE /* ChessStorage */,
+				D21A5AFB1C9D7FB5002279CE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D21A5AFB1C9D7FB5002279CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D21A5AFA1C9D7FB5002279CE /* ChessStorage.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D21A5AFC1C9D7FB5002279CE /* ChessStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D2EE8FBD1C9D839900449F74 /* ChessStorage */,
+				D2F4614E1CA017B90005D933 /* Session */,
+				D2F461451CA017300005D933 /* Module */,
+				D21A5B001C9D7FB5002279CE /* AppDelegate.h */,
+				D21A5B011C9D7FB5002279CE /* AppDelegate.m */,
+				D21A5B091C9D7FB5002279CE /* Assets.xcassets */,
+				D21A5B0E1C9D7FB5002279CE /* Info.plist */,
+				D21A5AFD1C9D7FB5002279CE /* Supporting Files */,
+			);
+			path = ChessStorage;
+			sourceTree = "<group>";
+		};
+		D21A5AFD1C9D7FB5002279CE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D21A5B1A1C9D80A1002279CE /* Frame */,
+				D21A5AFE1C9D7FB5002279CE /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D21A5B1A1C9D80A1002279CE /* Frame */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frame;
+			sourceTree = "<group>";
+		};
+		D2EE8FBD1C9D839900449F74 /* ChessStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D2EE8FBE1C9D83FA00449F74 /* ChessStorage.h */,
+				D2EE8FBF1C9D83FA00449F74 /* ChessStorage.m */,
+				D2F4613E1C9FF5460005D933 /* ChessStorageProtected.h */,
+				D2F4613B1C9FDA150005D933 /* ChessConfig.h */,
+				D2F4613C1C9FDA150005D933 /* ChessConfig.m */,
+				D2F4613F1C9FF5640005D933 /* ChessConfigProtected.h */,
+			);
+			path = ChessStorage;
+			sourceTree = "<group>";
+		};
+		D2F461451CA017300005D933 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				D2F461461CA017300005D933 /* Roster */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		D2F461461CA017300005D933 /* Roster */ = {
+			isa = PBXGroup;
+			children = (
+				D2F4614A1CA017480005D933 /* CoreDataStorage */,
+				D2F461471CA017300005D933 /* RosterUtil.h */,
+				D2F461481CA017300005D933 /* RosterUtil.m */,
+			);
+			path = Roster;
+			sourceTree = "<group>";
+		};
+		D2F4614A1CA017480005D933 /* CoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D2F4614B1CA0175F0005D933 /* RosterStorage.h */,
+				D2F4614C1CA0175F0005D933 /* RosterStorage.m */,
+				D2F461571CA01B090005D933 /* Roster.xcdatamodeld */,
+				D2F4616C1CA025E20005D933 /* FriendEntity+CoreDataProperties.h */,
+				D2F4616D1CA025E20005D933 /* FriendEntity+CoreDataProperties.m */,
+				D2F4616E1CA025E20005D933 /* FriendEntity.h */,
+				D2F4616F1CA025E20005D933 /* FriendEntity.m */,
+			);
+			path = CoreDataStorage;
+			sourceTree = "<group>";
+		};
+		D2F4614E1CA017B90005D933 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				D2F4614F1CA017B90005D933 /* Friends */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		D2F4614F1CA017B90005D933 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				D2F461541CA018A20005D933 /* FriendListViewController.h */,
+				D2F461551CA018A20005D933 /* FriendListViewController.m */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D21A5AF91C9D7FB5002279CE /* ChessStorage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D21A5B111C9D7FB5002279CE /* Build configuration list for PBXNativeTarget "ChessStorage" */;
+			buildPhases = (
+				D21A5AF61C9D7FB5002279CE /* Sources */,
+				D21A5AF71C9D7FB5002279CE /* Frameworks */,
+				D21A5AF81C9D7FB5002279CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChessStorage;
+			productName = ChessStorage;
+			productReference = D21A5AFA1C9D7FB5002279CE /* ChessStorage.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D21A5AF21C9D7FB5002279CE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Xiangqi;
+				TargetAttributes = {
+					D21A5AF91C9D7FB5002279CE = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = D21A5AF51C9D7FB5002279CE /* Build configuration list for PBXProject "ChessStorage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D21A5AF11C9D7FB5002279CE;
+			productRefGroup = D21A5AFB1C9D7FB5002279CE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D21A5AF91C9D7FB5002279CE /* ChessStorage */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D21A5AF81C9D7FB5002279CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21A5B0A1C9D7FB5002279CE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D21A5AF61C9D7FB5002279CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F461561CA018A20005D933 /* FriendListViewController.m in Sources */,
+				D2F4613D1C9FDA150005D933 /* ChessConfig.m in Sources */,
+				D2F461591CA01B090005D933 /* Roster.xcdatamodeld in Sources */,
+				D2EE8FC01C9D83FA00449F74 /* ChessStorage.m in Sources */,
+				D2F461491CA017300005D933 /* RosterUtil.m in Sources */,
+				D2F461701CA025E20005D933 /* FriendEntity+CoreDataProperties.m in Sources */,
+				D21A5B021C9D7FB5002279CE /* AppDelegate.m in Sources */,
+				D21A5AFF1C9D7FB5002279CE /* main.m in Sources */,
+				D2F461711CA025E20005D933 /* FriendEntity.m in Sources */,
+				D2F4614D1CA0175F0005D933 /* RosterStorage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D21A5B0F1C9D7FB5002279CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D21A5B101C9D7FB5002279CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D21A5B121C9D7FB5002279CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = ChessStorage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.XiangqiTu.ChessStorage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D21A5B131C9D7FB5002279CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = ChessStorage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.XiangqiTu.ChessStorage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D21A5AF51C9D7FB5002279CE /* Build configuration list for PBXProject "ChessStorage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D21A5B0F1C9D7FB5002279CE /* Debug */,
+				D21A5B101C9D7FB5002279CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D21A5B111C9D7FB5002279CE /* Build configuration list for PBXNativeTarget "ChessStorage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D21A5B121C9D7FB5002279CE /* Debug */,
+				D21A5B131C9D7FB5002279CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D2F461571CA01B090005D933 /* Roster.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D2F461581CA01B090005D933 /* Roster.xcdatamodel */,
+			);
+			currentVersion = D2F461581CA01B090005D933 /* Roster.xcdatamodel */;
+			path = Roster.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D21A5AF21C9D7FB5002279CE /* Project object */;
+}
