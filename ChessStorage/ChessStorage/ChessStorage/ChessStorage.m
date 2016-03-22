@@ -7,6 +7,7 @@
 //
 
 #import "ChessStorage.h"
+#import <UIKit/UIApplication.h>
 
 #import <libkern/OSAtomic.h>
 
@@ -43,6 +44,21 @@
     
     willSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
     didSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(saveMainThreadContext)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
+}
+
+- (void)saveMainThreadContext
+{
+    NSManagedObjectContext *moc = [self mainThreadManagedObjectContext];
+    NSError *error = nil;
+    if (![moc save:&error])
+    {
+        [moc rollback];
+    }
 }
 
 - (NSUInteger)saveThreshold

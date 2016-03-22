@@ -82,6 +82,13 @@
 @property (weak, readonly) NSManagedObjectContext *mainThreadManagedObjectContext;
 @property (weak, readonly) NSManagedObjectContext *managedObjectContext;
 
+/**
+ *
+ * Initializes a core data storage instance with ChessConfig.
+ * ChessConfig  defines Core Data storage on how to configure the basic structures,
+ * and contexts of the merger notification
+ *
+ */
 - (id)initWithConfiguration:(ChessConfig *)configuration;
 
 #pragma mark Performance Optimizations

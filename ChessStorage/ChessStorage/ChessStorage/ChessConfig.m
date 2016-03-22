@@ -20,7 +20,7 @@
         managedObjectModelName = aManagedObjectModelName;
         
         if (aDatabaseFileName)
-            databaseFileName = [aDatabaseFileName copy];
+            databaseFileName = [NSString stringWithFormat:@"%@.sqlite", [aDatabaseFileName copy]];
         else
             databaseFileName = [[self defaultDatabaseFileName] copy];
         

@@ -20,6 +20,7 @@
     // Override point for customization after application launch.
     FriendListViewController *vc = [[FriendListViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];
     return YES;

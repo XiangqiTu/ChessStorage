@@ -7,10 +7,12 @@
 //
 
 #import "FriendListViewController.h"
+#import "RosterUtil.h"
 
-@interface FriendListViewController ()
+@interface FriendListViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSMutableArray        *dataSourceArray;
+@property (nonatomic, strong) NSFetchedResultsController    *fetchedResultsController;
+@property (nonatomic, strong) RosterUtil            *rosterUtil;
 
 @end
 
@@ -19,7 +21,9 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     if (self = [super initWithStyle:style]) {
-        self.dataSourceArray = [NSMutableArray array];
+        self.rosterUtil = [[RosterUtil alloc] init];
+        self.fetchedResultsController = [self.rosterUtil fetchedResultsController];
+        self.fetchedResultsController.delegate = self;
     }
     
     return self;
@@ -29,6 +33,15 @@
     [super viewDidLoad];
     
     [self initNavigationItems];
+    [self performFetch];
+}
+
+- (void)performFetch
+{
+    NSError *error = nil;
+    if ([self.fetchedResultsController performFetch:&error]) {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)initNavigationItems
@@ -39,7 +52,10 @@
 
 - (void)respondsToRightBarButton:(id)sender
 {
-    NSLog(@"add a new record");
+    static int t = 0;
+    [self.rosterUtil addNewFriendWithName:[NSString stringWithFormat:@"ChessStorage%d",t]
+                                      age:t];
+    t++;
 }
 
 #pragma mark - Table view data source
@@ -49,7 +65,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.dataSourceArray count];
+    return [self.fetchedResultsController.fetchedObjects count];
 }
 
 
@@ -60,6 +76,10 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    
+    FriendEntity *entity = (FriendEntity *)[self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+    [cell.textLabel setText:entity.name];
+    [cell.detailTextLabel setText:[entity.age stringValue]];
     
     return cell;
 }
@@ -74,13 +94,52 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        FriendEntity *entity = (FriendEntity *)[self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+        [self.rosterUtil deleteFriendWithFriendEntity:entity];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - FetchedResultsController Delegate
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    NSLog(@"At: %ld   newIndex: %ld",indexPath.row,newIndexPath.row );
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+        {
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+            [self.tableView scrollToRowAtIndexPath:newIndexPath
+                                  atScrollPosition:UITableViewScrollPositionBottom
+                                          animated:YES];
+            break;
+        }
+            case NSFetchedResultsChangeDelete:
+        {
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+        }
+        case NSFetchedResultsChangeUpdate:
+        {
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+            case NSFetchedResultsChangeMove:
+        {
+            [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    
 }
 
 @end

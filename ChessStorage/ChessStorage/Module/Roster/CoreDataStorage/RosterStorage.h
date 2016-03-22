@@ -10,8 +10,12 @@
 #import "ChessStorage.h"
 #import "FriendEntity.h"
 
+#define kRosterFriendEntityName @"FriendEntity"
+
 @interface RosterStorage : ChessStorage
 
 - (void)addNewFriendEntityWithName:(NSString *)name age:(NSInteger)age;
+
+- (void)deleteFriendEntity:(FriendEntity *)entity;
 
 @end

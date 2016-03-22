@@ -11,9 +11,10 @@
 
 @interface RosterUtil : NSObject
 
-@property (nonatomic, strong) RosterStorage *rosterStorage;
+- (NSFetchedResultsController *)fetchedResultsController;
 
 - (void)addNewFriendWithName:(NSString *)name age:(NSInteger)age;
 
-- (void)deleteFriendWithName:(NSString *)name;
+- (void)deleteFriendWithFriendEntity:(FriendEntity *)entity;
+
 @end
