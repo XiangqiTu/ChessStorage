@@ -11,6 +11,12 @@
 
 #import <libkern/OSAtomic.h>
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 @interface ChessStorage ()
 
 @property (nonatomic, strong) ChessConfig   *config;
@@ -45,19 +51,27 @@
     willSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
     didSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(saveMainThreadContext)
-                                                 name:UIApplicationWillTerminateNotification
-                                               object:nil];
+    /**
+     *  In iOS 8.0 ~iOS 9.0,saveMainThreadContext while appplication terminate will generate a crash log,
+     *  do this to avoid this log
+     */
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") || SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(saveMainThreadContext)
+                                                     name:UIApplicationWillTerminateNotification
+                                                   object:nil];
+    }
 }
 
 - (void)saveMainThreadContext
 {
     NSManagedObjectContext *moc = [self mainThreadManagedObjectContext];
     NSError *error = nil;
-    if (![moc save:&error])
-    {
-        [moc rollback];
+    if ([moc hasChanges] && moc.persistentStoreCoordinator != nil) {
+        if (![moc save:&error])
+        {
+            [moc rollback];
+        }
     }
 }
 

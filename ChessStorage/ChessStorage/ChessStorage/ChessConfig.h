@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 /**
  *
- * ChessConfig  defines Core Data storage on how to configure the basic structures 
+ * ChessConfig  defines Core Data storage on how to configure the basic structures
  * and contexts of the merger notification
  *
  * For more information on how to extend this class,
@@ -118,9 +118,12 @@
 
 #pragma mark Core Data
 
+@property (nonatomic, copy) NSString *persistentStoreDirectory;
 /**
  * The standard persistentStoreDirectory method.
  **/
 - (NSString *)persistentStoreDirectory;
+
+- (void)setPersistentStoreDirectory:(NSString *)persistenStoreDirectoryPath;
 
 @end

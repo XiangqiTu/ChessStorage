@@ -197,30 +197,16 @@
 
 #pragma mark - Fetch Method
 
+/**
+ *  According mark, execute the query function in the right context,
+ *  and returns a array which contains fetched results(Type of NSManagedObjectResultType).
+ */
 - (NSArray *)fetchEntityName:(NSString *)entityName
                     criteria:(NSString *)criteria
                    variables:(NSDictionary *)variables
                       sortBy:(NSString *)sortKeys
                    ascending:(BOOL)isAscending;
 
-/**
- *
- *  According mark, execute the query function in the right context,
- *  and returns a array which contains fetched results(Type of NSManagedObjectResultType).
- *
- *  @param entityName  <#entityName description#>
- *  @param criteria    <#criteria description#>
- *  @param variables   <#variables description#>
- *  @param sortKeys    <#sortKeys description#>
- *  @param isAscending <#isAscending description#>
- *  @param offset      <#offset description#>
- *  @param limit       <#limit description#>
- *  @param properties  <#properties description#>
- *  @param isDistinct  <#isDistinct description#>
- *  @param error       <#error description#>
- *
- *  @return <#return value description#>
- */
 - (NSArray *)fetchEntityName:(NSString *)entityName
                     criteria:(NSString *)criteria
                    variables:(NSDictionary *)variables
