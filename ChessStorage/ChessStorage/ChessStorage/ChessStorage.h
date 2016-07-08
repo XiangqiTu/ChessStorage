@@ -46,12 +46,8 @@
 @private
     int32_t pendingRequests;
     
-    NSMutableArray *willSaveManagedObjectContextBlocks;
-    NSMutableArray *didSaveManagedObjectContextBlocks;
-    
 @protected
     NSUInteger saveThreshold;
-    NSUInteger saveCount;
 }
 
 /**
@@ -91,49 +87,9 @@
  */
 - (id)initWithConfiguration:(ChessConfig *)configuration;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Performance Optimizations
-
-/**
- * Queries the managedObjectContext to determine the number of unsaved managedObjects.
- **/
-- (NSUInteger)numberOfUnsavedChanges;
-
-/**
- * You will not often need to manually call this method.
- * It is called automatically, at appropriate and optimized times, via the executeBlock and scheduleBlock methods.
- *
- * The one exception to this is when you are inserting/deleting/updating a large number of objects in a loop.
- * It is recommended that you invoke save from within the loop.
- * E.g.:
- *
- * NSUInteger unsavedCount = [self numberOfUnsavedChanges];
- * for (NSManagedObject *obj in fetchResults)
- * {
- *     [[self managedObjectContext] deleteObject:obj];
- *
- *     if (++unsavedCount >= saveThreshold)
- *     {
- *         [self save];
- *         unsavedCount = 0;
- *     }
- * }
- *
- * See also the documentation for executeBlock and scheduleBlock below.
- **/
-- (void)save; // Read the comments above !
-
-/**
- * You will rarely need to manually call this method.
- * It is called automatically, at appropriate and optimized times, via the executeBlock and scheduleBlock methods.
- *
- * This method makes informed decisions as to whether it should save the managedObjectContext changes to disk.
- * Since this disk IO is a slow process, it is better to buffer writes during high demand.
- * This method takes into account the number of pending requests waiting on the storage instance,
- * as well as the number of unsaved changes (which reside in NSManagedObjectContext's internal memory).
- *
- * Please see the documentation for executeBlock and scheduleBlock below.
- **/
-- (void)maybeSave; // Read the comments above !
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * This method synchronously invokes the given block (dispatch_sync) on the storageQueue.
@@ -180,22 +136,18 @@
 - (void)scheduleBlock:(dispatch_block_t)block;
 
 /**
- * Sometimes you want to call a method before calling save on a Managed Object Context e.g. willSaveObject:
- *
- * addWillSaveManagedObjectContextBlock allows you to add a block of code to be called before saving a Managed Object Context,
- * without the overhead of having to call save at that moment.
- **/
-- (void)addWillSaveManagedObjectContextBlock:(void (^)(void))willSaveBlock;
-
-/**
  * Sometimes you want to call a method after calling save on a Managed Object Context e.g. didSaveObject:
  *
  * addDidSaveManagedObjectContextBlock allows you to add a block of code to be after saving a Managed Object Context,
  * without the overhead of having to call save at that moment.
+ *
+ ** invokeQueue: didSaveBlock invoke on this queue. If nil, invokeQueue = storageQueue.
  **/
-- (void)addDidSaveManagedObjectContextBlock:(void (^)(void))didSaveBlock;
+- (void)addDidSaveManagedObjectContextBlock:(void (^)(void))didSaveBlock invokeQueue:(dispatch_queue_t)invokeQueue;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Fetch Method
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  *  According mark, execute the query function in the right context,

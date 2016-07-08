@@ -8,8 +8,8 @@
 
 #import "ChessStorage.h"
 #import <UIKit/UIApplication.h>
-
 #import <libkern/OSAtomic.h>
+#import "ChessMulticastBlockBus.h"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
@@ -18,10 +18,55 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 @interface ChessStorage ()
+{
+    ChessMulticastBlockBus *didSaveManagedContextBus;
+}
 
 @property (nonatomic, strong) ChessConfig   *config;
 @property (nonatomic, weak) dispatch_queue_t storageQueue;
 @property (nonatomic, assign) void *storageQueueTag;
+
+/**
+ * Queries the managedObjectContext to determine the number of unsaved managedObjects.
+ **/
+- (NSUInteger)numberOfUnsavedChanges;
+
+/**
+ * You will not often need to manually call this method.
+ * It is called automatically, at appropriate and optimized times, via the executeBlock and scheduleBlock methods.
+ *
+ * The one exception to this is when you are inserting/deleting/updating a large number of objects in a loop.
+ * It is recommended that you invoke save from within the loop.
+ * E.g.:
+ *
+ * NSUInteger unsavedCount = [self numberOfUnsavedChanges];
+ * for (NSManagedObject *obj in fetchResults)
+ * {
+ *     [[self managedObjectContext] deleteObject:obj];
+ *
+ *     if (++unsavedCount >= saveThreshold)
+ *     {
+ *         [self save];
+ *         unsavedCount = 0;
+ *     }
+ * }
+ *
+ * See also the documentation for executeBlock and scheduleBlock below.
+ **/
+- (void)save; // Read the comments above !
+
+/**
+ * You will rarely need to manually call this method.
+ * It is called automatically, at appropriate and optimized times, via the executeBlock and scheduleBlock methods.
+ *
+ * This method makes informed decisions as to whether it should save the managedObjectContext changes to disk.
+ * Since this disk IO is a slow process, it is better to buffer writes during high demand.
+ * This method takes into account the number of pending requests waiting on the storage instance,
+ * as well as the number of unsaved changes (which reside in NSManagedObjectContext's internal memory).
+ *
+ * Please see the documentation for executeBlock and scheduleBlock below.
+ **/
+- (void)maybeSave; // Read the comments above !
 
 @end
 
@@ -42,14 +87,15 @@
     return self;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Setup
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)commonInit
 {
     saveThreshold = 500;
     
-    willSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
-    didSaveManagedObjectContextBlocks = [[NSMutableArray alloc] init];
+    didSaveManagedContextBus = [[ChessMulticastBlockBus alloc] init];
     
     /**
      *  In iOS 8.0 ~iOS 9.0,saveMainThreadContext while appplication terminate will generate a crash log,
@@ -115,23 +161,9 @@
     return [self.config managedObjectContext];
 }
 
-#pragma mark Override Me
-
-- (void)willSaveManagedObjectContext
-{
-    // Override me if you need to do anything special just before changes are saved to disk.
-    //
-    // This method is invoked on the storageQueue.
-}
-
-- (void)didSaveManagedObjectContext
-{
-    // Override me if you need to do anything special after changes have been saved to disk.
-    //
-    // This method is invoked on the storageQueue.
-}
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Utilities
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSUInteger)numberOfUnsavedChanges
 {
@@ -152,29 +184,17 @@
     // So there's no need for us to do it here, especially since this method is usually
     // called from maybeSave below, which already does this check.
     
-    for(void (^block)(void) in willSaveManagedObjectContextBlocks) {
-        block();
-    }
-    
-    [willSaveManagedObjectContextBlocks removeAllObjects];
-    
     NSError *error = nil;
     
     if ([[self managedObjectContext] save:&error]){
-        saveCount++;
         
-        for(void (^block)(void) in didSaveManagedObjectContextBlocks) {
-            block();
-        }
-        
-        [didSaveManagedObjectContextBlocks removeAllObjects];
+        [didSaveManagedContextBus multicastBlocks];
     }
     else
     {
-        
         [[self managedObjectContext] rollback];
         
-        [didSaveManagedObjectContextBlocks removeAllObjects];
+        [didSaveManagedContextBus removeAllInvokeBlocks];
     }
 }
 
@@ -187,7 +207,6 @@
     {
         if (currentPendingRequests == 0)
         {
-            
             [self save];
         }
         else
@@ -195,7 +214,6 @@
             NSUInteger unsavedCount = [self numberOfUnsavedChanges];
             if (unsavedCount >= saveThreshold)
             {
-                
                 [self save];
             }
         }
@@ -262,31 +280,21 @@
     }});
 }
 
-- (void)addWillSaveManagedObjectContextBlock:(void (^)(void))willSaveBlock
+- (void)addDidSaveManagedObjectContextBlock:(void (^)(void))didSaveBlock invokeQueue:(dispatch_queue_t)invokeQueue;
 {
     dispatch_block_t block = ^{
-        [willSaveManagedObjectContextBlocks addObject:[willSaveBlock copy]];
+        [didSaveManagedContextBus addInvokeBlock:didSaveBlock invokeQueue:invokeQueue];
     };
     
     if (dispatch_get_specific(storageQueueTag))
         block();
     else
-        dispatch_sync(storageQueue, block);
+        dispatch_async(storageQueue, block);
 }
 
-- (void)addDidSaveManagedObjectContextBlock:(void (^)(void))didSaveBlock
-{
-    dispatch_block_t block = ^{
-        [didSaveManagedObjectContextBlocks addObject:[didSaveBlock copy]];
-    };
-    
-    if (dispatch_get_specific(storageQueueTag))
-        block();
-    else
-        dispatch_sync(storageQueue, block);
-}
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Memory Management
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)dealloc
 {
@@ -298,7 +306,9 @@
 #endif
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Fetch Method
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSArray *)fetchEntityName:(NSString *)entityName
                     criteria:(NSString *)criteria

@@ -11,7 +11,8 @@
 
 @implementation ChessConfig
 
-@synthesize storeOptions, databaseFileName, managedObjectModelName, storageQueueTag, storageQueue, persistentStoreDirectory = _persistentStoreDirectory;
+@synthesize storeOptions, databaseFileName, managedObjectModelName, persistentStoreDirectory = _persistentStoreDirectory;
+@synthesize storageQueueTag, storageQueue;
 
 - (id)initWithDatabaseFilename:(NSString *)aDatabaseFileName managedObjectModelName:(NSString *)aManagedObjectModelName
 {
@@ -39,7 +40,10 @@
     dispatch_queue_set_specific(storageQueue, storageQueueTag, storageQueueTag, NULL);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Override Method
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (NSBundle *)managedObjectModelBundle
 {
     return [NSBundle bundleForClass:[self class]];
@@ -151,7 +155,10 @@
     // This method is invoked on the main thread.
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CoreData Setup
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (NSString *)persistentStoreDirectory
 {
     if (_persistentStoreDirectory) {

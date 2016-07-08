@@ -10,6 +10,7 @@
 		D21A5AFF1C9D7FB5002279CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A5AFE1C9D7FB5002279CE /* main.m */; };
 		D21A5B021C9D7FB5002279CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A5B011C9D7FB5002279CE /* AppDelegate.m */; };
 		D21A5B0A1C9D7FB5002279CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21A5B091C9D7FB5002279CE /* Assets.xcassets */; };
+		D2B1162C1D2FA9650084D1CA /* ChessMulticastBlockBus.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B1162B1D2FA9650084D1CA /* ChessMulticastBlockBus.m */; };
 		D2EE8FC01C9D83FA00449F74 /* ChessStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EE8FBF1C9D83FA00449F74 /* ChessStorage.m */; };
 		D2F4613D1C9FDA150005D933 /* ChessConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4613C1C9FDA150005D933 /* ChessConfig.m */; };
 		D2F461491CA017300005D933 /* RosterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F461481CA017300005D933 /* RosterUtil.m */; };
@@ -27,6 +28,8 @@
 		D21A5B011C9D7FB5002279CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D21A5B091C9D7FB5002279CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D21A5B0E1C9D7FB5002279CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2B1162A1D2FA9650084D1CA /* ChessMulticastBlockBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessMulticastBlockBus.h; sourceTree = "<group>"; };
+		D2B1162B1D2FA9650084D1CA /* ChessMulticastBlockBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessMulticastBlockBus.m; sourceTree = "<group>"; };
 		D2EE8FBE1C9D83FA00449F74 /* ChessStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessStorage.h; sourceTree = "<group>"; };
 		D2EE8FBF1C9D83FA00449F74 /* ChessStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessStorage.m; sourceTree = "<group>"; };
 		D2F4613B1C9FDA150005D933 /* ChessConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessConfig.h; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				D2F4613B1C9FDA150005D933 /* ChessConfig.h */,
 				D2F4613C1C9FDA150005D933 /* ChessConfig.m */,
 				D2F4613F1C9FF5640005D933 /* ChessConfigProtected.h */,
+				D2B1162A1D2FA9650084D1CA /* ChessMulticastBlockBus.h */,
+				D2B1162B1D2FA9650084D1CA /* ChessMulticastBlockBus.m */,
 			);
 			path = ChessStorage;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				D2F4613D1C9FDA150005D933 /* ChessConfig.m in Sources */,
 				D2F461591CA01B090005D933 /* Roster.xcdatamodeld in Sources */,
 				D2EE8FC01C9D83FA00449F74 /* ChessStorage.m in Sources */,
+				D2B1162C1D2FA9650084D1CA /* ChessMulticastBlockBus.m in Sources */,
 				D2F461491CA017300005D933 /* RosterUtil.m in Sources */,
 				D2F461701CA025E20005D933 /* FriendEntity+CoreDataProperties.m in Sources */,
 				D21A5B021C9D7FB5002279CE /* AppDelegate.m in Sources */,
