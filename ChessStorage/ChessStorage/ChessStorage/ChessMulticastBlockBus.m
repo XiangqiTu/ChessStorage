@@ -23,7 +23,10 @@
 {
     if (self = [super init]) {
         invokeBlock = [block copy];
-        invokeQueue = aInvokeQueue;
+        if (aInvokeQueue)
+            invokeQueue = aInvokeQueue;
+        else
+            invokeQueue = dispatch_get_main_queue();
     }
     
     return self;
@@ -36,6 +39,8 @@
 @interface ChessMulticastBlockBus ()
 {
     NSMutableArray *muticastBlockNodesArray;
+    dispatch_queue_t multicastBlockQueue;
+    void *multicastBlockQueueTag;
 }
 
 @end
@@ -44,10 +49,12 @@
 
 @synthesize muticastBlockNodesArray;
 
-- (id)init
+- (id)initWithMulticastBlockQueue:(dispatch_queue_t)aMulticastBlockQueue multicastBlockQueueTag:(void *)queueTag;
 {
     if (self = [super init]) {
         muticastBlockNodesArray = [[NSMutableArray alloc] init];
+        multicastBlockQueue = aMulticastBlockQueue;
+        multicastBlockQueueTag = queueTag;
     }
     
     return self;
@@ -55,31 +62,57 @@
 
 - (void)addInvokeBlock:(dispatch_block_t)block invokeQueue:(dispatch_queue_t)invokeQueue
 {
-    ChessMulticastBlockNode *node = [[ChessMulticastBlockNode alloc] initWithInvokeBlock:block invokeQueue:invokeQueue];
-    [muticastBlockNodesArray addObject:node];
+    dispatch_block_t aBlock = ^{@autoreleasepool{
+        ChessMulticastBlockNode *node = [[ChessMulticastBlockNode alloc] initWithInvokeBlock:block invokeQueue:invokeQueue];
+        [muticastBlockNodesArray addObject:node];
+    }};
+    
+    if (dispatch_get_specific(multicastBlockQueueTag))
+        aBlock();
+    else
+        dispatch_async(multicastBlockQueue, aBlock);
 }
 
 - (void)removeAllInvokeBlocks
 {
-    for (ChessMulticastBlockNode *node in muticastBlockNodesArray) {
-        node.invokeBlock = nil;
-        node.invokeQueue = nil;
-    }
+    dispatch_block_t aBlock = ^{@autoreleasepool{
+        for (ChessMulticastBlockNode *node in muticastBlockNodesArray) {
+            node.invokeBlock = nil;
+            node.invokeQueue = nil;
+        }
+        
+        [muticastBlockNodesArray removeAllObjects];
+    }};
     
-    [muticastBlockNodesArray removeAllObjects];
+    if (dispatch_get_specific(multicastBlockQueueTag))
+        aBlock();
+    else
+        dispatch_async(multicastBlockQueue, aBlock);
 }
 
 - (void)multicastBlocks
 {
-    for (ChessMulticastBlockNode *node in muticastBlockNodesArray) {
-        dispatch_queue_t queue = node.invokeQueue;
-        dispatch_block_t block = node.invokeBlock;
-        if (queue && block) {
-            dispatch_async(queue, block);
+    dispatch_block_t aBlock = ^{@autoreleasepool{
+        dispatch_group_t group = dispatch_group_create();
+        
+        for (ChessMulticastBlockNode *node in muticastBlockNodesArray) {
+            dispatch_queue_t queue = node.invokeQueue;
+            dispatch_block_t block = [node.invokeBlock copy];
+            if (!queue || !block)
+                continue;
+            
+            dispatch_group_async(group, queue, block);
         }
-    }
+        
+        dispatch_group_notify(group, multicastBlockQueue, ^{
+            [self removeAllInvokeBlocks];
+        });
+    }};
     
-    [self removeAllInvokeBlocks];
+    if (dispatch_get_specific(multicastBlockQueueTag))
+        aBlock();
+    else
+        dispatch_async(multicastBlockQueue, aBlock);
 }
 
 @end

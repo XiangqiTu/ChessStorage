@@ -95,7 +95,7 @@
 {
     saveThreshold = 500;
     
-    didSaveManagedContextBus = [[ChessMulticastBlockBus alloc] init];
+    didSaveManagedContextBus = [[ChessMulticastBlockBus alloc] initWithMulticastBlockQueue:storageQueue multicastBlockQueueTag:storageQueueTag];
     
     /**
      *  In iOS 8.0 ~iOS 9.0,saveMainThreadContext while appplication terminate will generate a crash log,
