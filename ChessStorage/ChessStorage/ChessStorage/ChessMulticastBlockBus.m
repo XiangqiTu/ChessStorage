@@ -63,7 +63,12 @@
 - (void)addInvokeBlock:(dispatch_block_t)block invokeQueue:(dispatch_queue_t)invokeQueue
 {
     dispatch_block_t aBlock = ^{@autoreleasepool{
-        ChessMulticastBlockNode *node = [[ChessMulticastBlockNode alloc] initWithInvokeBlock:block invokeQueue:invokeQueue];
+        if (!block) return;
+        
+        dispatch_queue_t queue = invokeQueue;
+        if (!queue) queue = dispatch_get_main_queue();
+        
+        ChessMulticastBlockNode *node = [[ChessMulticastBlockNode alloc] initWithInvokeBlock:block invokeQueue:queue];
         [muticastBlockNodesArray addObject:node];
     }};
     
