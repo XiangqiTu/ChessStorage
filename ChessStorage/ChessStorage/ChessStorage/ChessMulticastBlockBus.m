@@ -98,20 +98,16 @@
 - (void)multicastBlocks
 {
     dispatch_block_t aBlock = ^{@autoreleasepool{
-        dispatch_group_t group = dispatch_group_create();
-        
         for (ChessMulticastBlockNode *node in muticastBlockNodesArray) {
             dispatch_queue_t queue = node.invokeQueue;
             dispatch_block_t block = [node.invokeBlock copy];
             if (!queue || !block)
                 continue;
             
-            dispatch_group_async(group, queue, block);
+            dispatch_async(queue, block);
         }
         
-        dispatch_group_notify(group, multicastBlockQueue, ^{
-            [self removeAllInvokeBlocks];
-        });
+        [self removeAllInvokeBlocks];
     }};
     
     if (dispatch_get_specific(multicastBlockQueueTag))
@@ -121,4 +117,3 @@
 }
 
 @end
-
