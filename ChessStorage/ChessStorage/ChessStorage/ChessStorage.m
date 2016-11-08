@@ -217,6 +217,8 @@
                 [self save];
             }
         }
+    } else {
+        [didSaveManagedContextBus multicastBlocks];
     }
 }
 
